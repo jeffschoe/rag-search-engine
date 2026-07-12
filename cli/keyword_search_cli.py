@@ -18,6 +18,8 @@ def main() -> None:
         case "search":
             print(f'Searching for: {args.query}')
 
+            processed_query = args.query.lower()
+            
             results = []
 
             with open (abs_file_path,"r") as read_content:
@@ -26,7 +28,7 @@ def main() -> None:
             movies_dict = movies_json["movies"]
             for movie in movies_dict:
                 movie_title = movie["title"]
-                if args.query in movie_title:
+                if processed_query in movie_title.lower():
                     results.append(movie_title)
             
          
