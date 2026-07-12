@@ -2,6 +2,8 @@ import argparse
 import json
 import os
 
+from lib.keyword_search import search_command
+
 DEFAULT_SEARCH_LIMIT = 5
 
 def main() -> None:
@@ -17,26 +19,9 @@ def main() -> None:
     match args.command:
         case "search":
             print(f'Searching for: {args.query}')
-
-            processed_query = args.query.lower()
-            
-            results = []
-
-            with open (abs_file_path,"r") as read_content:
-                movies_json: dict = json.load(read_content)
-
-            movies_dict = movies_json["movies"]
-            for movie in movies_dict:
-                movie_title = movie["title"]
-                if processed_query in movie_title.lower():
-                    results.append(movie_title)
-            
-         
+            results = search_command(args.query)
             for i, res in enumerate(results, 1):
-                if i > DEFAULT_SEARCH_LIMIT: break
-                print(f'{i}. Movie Title: {res}')
-            
-
+                print(f'{i}. {res['title']}')         
 
         case _:
             parser.print_help()
