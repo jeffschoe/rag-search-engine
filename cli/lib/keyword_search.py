@@ -7,35 +7,29 @@ def search_command(query: str, limit: int = DEFAULT_SEARCH_LIMIT) -> list[dict]:
     movies = load_movies()
     results = []
 
-    preprocessed_query = preprocess_text(query)
+    query_tokens = preprocess_text(query)
         #print(f'*** DEBUG QUERY:')
         #print(*preprocessed_query, sep='\n')
 
     for movie in movies:
         
-        preprocessed_title = preprocess_text(movie["title"])
+        title_tokens = preprocess_text(movie["title"])
         #print(f'*** DEBUG TITLE:')
         #print(*preprocessed_title, sep='\n')
 
-        match_found = False
-        for query_token in preprocessed_query:
-            for title_token in preprocessed_title:
-                # is query_token a substring of title_token?
-                if query_token in title_token:
-                    match_found = True
-                    break
-            if match_found:
+        if has_matching_tokens(query_tokens, title_tokens):
+            results.append(movie)
+            if len(results) >= limit:
                 break
-
-        if not match_found: 
-            continue # go to next movie
-        
-        results.append(movie)
-        if len(results) >= limit:
-           break
 
     return results
 
+def has_matching_tokens(query_tokens: list[str], title_tokens: list[str]) -> bool:
+    for query_token in query_tokens:
+        for title_token in title_tokens:
+            if query_token in title_token:
+                return True
+    return False
 
 def preprocess_text(text: str) -> list[str]:
     #print(f'*** original = {text}')
