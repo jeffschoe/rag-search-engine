@@ -4,7 +4,6 @@ import os
 
 from lib.keyword_search import search_command
 
-DEFAULT_SEARCH_LIMIT = 5
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Keyword Search CLI") # creates CLI
