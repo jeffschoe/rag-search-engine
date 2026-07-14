@@ -21,9 +21,3 @@ def load_movies() -> list[Movie]:
     with open(DATA_PATH, "r") as f:
         data = json.load(f)
     return data["movies"]
-
-def load_stopwords() -> list[str]:
-    stopwords_file = open(STOPWORDS_PATH, "r")
-    stopwords_content = stopwords_file.read()
-    stopwords_list = stopwords_content.splitlines()
-    return stopwords_list
