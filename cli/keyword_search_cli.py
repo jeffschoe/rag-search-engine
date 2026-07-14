@@ -1,6 +1,5 @@
 import argparse
-import json
-import os
+
 
 from lib.keyword_search import search_command
 
@@ -14,7 +13,6 @@ def main() -> None:
 
     args = parser.parse_args() # capture user input
 
-    abs_file_path = os.path.abspath("./data/movies.json")
     match args.command:
         case "search":
             print(f'Searching for: {args.query}')
@@ -24,6 +22,7 @@ def main() -> None:
 
         case _:
             parser.print_help()
+
 
 if __name__ == "__main__":
     main()
