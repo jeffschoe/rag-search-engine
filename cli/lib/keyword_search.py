@@ -34,7 +34,7 @@ def has_matching_tokens(query_tokens: list[str], title_tokens: list[str]) -> boo
 def preprocess_text(text: str) -> str:
     lowered = text.lower()
     translation_table = str.maketrans("", "", string.punctuation)
-    translated = lowered.translate(translation_table)
+    translated = lowered.translate(translation_table) # removes punctuation
     return translated
 
 def load_stopwords() -> list[str]:
@@ -48,6 +48,6 @@ STOPWORDS = load_stopwords()
 def tokenize_text(text: str) -> list[str]:
     text = preprocess_text(text)
     tokens = text.split(" ")
-    valid_tokens = [token for token in tokens if token]
-    filtered_words = [word for word in valid_tokens if word not in STOPWORDS]
+    valid_tokens = [token for token in tokens if token] # removes empty tokens
+    filtered_words = [word for word in valid_tokens if word not in STOPWORDS] # removes stopwords
     return filtered_words
